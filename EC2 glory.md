@@ -446,5 +446,318 @@ Auto Scaling group Monitoring over the last 6 months shows that 6 web servers ar
     Đáp án: B
     
     
+34. How can software determine the public and private IP addresses of the Amazon EC2 instance that it is running on?
     
+    a. Query the local instance metadata
     
+    b. Query the appropriate Amazon CloudWatch metric.
+    
+    c. Query the local instance userdata.
+    
+    d. Use ipconfig or ifconfig command.    
+    
+    Đáp án: A.
+    
+        - user-data: what should I do?
+        - metadata: who am I?
+    
+35. The base URI for all requests for instance metadata is ___________
+    
+    a. http://254.169.169.254/latest/
+    
+    b. http://169.169.254.254/latest/
+    
+    c. http://127.0.0.1/latest/
+    
+    d. http://169.254.169.254/latest/    
+    
+    Đán án: D
+    
+36. Which Amazon Elastic Compute Cloud feature can you query from within the instance to access instance properties?
+    
+    a. Instance user data
+    
+    b. Resource tags
+    
+    c. Instance metadata
+    
+    d. Amazon Machine Image 
+    
+    Đáp án: C. Cả user-data và meta-data đều có thể được access từ EC2 nhưng câu hỏi đang nói về instance properties.
+    
+37. You need to pass a custom script to new Amazon Linux instances created in your Auto Scaling group. Which feature allows you to accomplish this?
+    
+    a. User data
+    
+    b. EC2Config service
+    
+    c. IAM roles
+    
+    d. AWS Config
+        
+    Đáp án: A. EC2 config đc cài trên window
+    
+38.You are responsible for a legacy web application whose server environment is approaching end of life. You would like to migrate this application to AWS as quickly as possible, since the application environment currently has the following limitations: The VM’s single 10GB VMDK is almost full. The virtual network interface still uses the 10Mbps driver, which leaves your 100Mbps WAN connection completely underutilized. It is currently running on a highly customized Windows VM within a VMware environment: You do not have the installation media. This is a mission critical application with an RTO (Recovery Time Objective) of 8 hours. RPO (Recovery Point Objective) of 1 hour. How could you best migrate this application to AWS while meeting your business continuity requirements?
+   
+   a. Use the EC2 VM Import Connector for vCenter to import the VM into EC2
+   
+   b. Use Import/Export to import the VM as an EBS snapshot and attach to EC2. (Import/Export is used to transfer large amount of data)
+   
+   c. Use S3 to create a backup of the VM and restore the data into EC2.
+   
+   d. Use the ec2-bundle-instance API to Import an Image of the VM into EC2 (only bundles an windows instance store instance)    
+   
+   Đáp án: A
+   
+39**. You are tasked with moving a legacy application from a virtual machine running inside your datacenter to an Amazon VPC. 
+Unfortunately this app requires access to a number of on-premises services and no one who configured the app still works for your company. Even worse there’s no documentation for it. What will allow the application running inside the VPC to reach back 
+and access its internal dependencies without 
+being reconfigured? (Choose 3 answers)
+      
+  a. An AWS Direct Connect link between the VPC and the network housing the internal services (VPN or a DX for communication)
+  
+  b. An Internet Gateway to allow a VPN connection. (Virtual and Customer gateway is needed)
+  
+  c. An Elastic IP address on the VPC instance (Don’t need a EIP as private subnets can also interact with on-premises network)
+  
+  d. An IP address space that does not conflict with the one on-premises (IP address cannot conflict)
+  
+  e. Entries in Amazon Route 53 that allow the Instance to resolve its dependencies’ IP addresses (Route 53 is not required)
+  
+  f. A VM Import of the current virtual machine (VM Import to copy the VM to AWS as there is no documentation it can’t be configured from scratch)   
+  
+  Đáp án: A, F, D
+  
+  A. An AWS Direct Connect link between the VPC and the network housing the internal services. — correct, you could use this to have the instance you migrated into the VPC communicate back to the legacy on-prem servers. (You could also use a VPN instead of a circuit if you wanted)
+  
+  B. An Internet Gateway to allow a VPN connection. — incorrect, you don’t need an IGW to build a VPN back to your on-prem data center
+  
+  C. An Elastic IP address on the VPC instance. — incorrect, there is nothing in the question to indicate anything needs to communicate over the Internet, it could all be internal traffic only.
+  
+  D. An IP address space that does not conflict with the one on-premises. — correct, you would totally need to make sure there were no private IP conflicts between your VPC CIDR and your internal on-prem networks if you wanted the instance in the VPC to talk to the legacy on-prem servers.
+  
+  E. Entries in Amazon Route 53 that allow the Instance to resolve its dependencies’ IP addresses. –incorrect… You could have your instance use hard-coded private IP addresses to communicate to the on-prem servers, thus removing DNS from the equation entirely. If you did choose to use DNS to resolve them (which is probably better than hard-coded private IP addresses), you still wouldn’t wouldn’t want to do a zone transfer and configure those DNS entries in Route53. You’d just point your VPC instance to your on-prem DNS server, or alternatively set up a bind instance in your VPC with a forwarder to your on-prem DNS server.
+  
+  F. A VM Import of the current virtual machine. — correct, you would definitely want to leverage this in order to easily migrate the VM from on-prem to AWS.
+  
+40. You launch an Amazon EC2 instance without an assigned AWS identity and Access Management (IAM) role. Later, you decide that the instance should be running with an IAM role. Which action must you take in order to have a running Amazon EC2 instance with an IAM role assigned to it?
+    
+    a. Create an image of the instance, and register the image with an IAM role assigned and an Amazon EBS volume mapping.
+    
+    b. Create a new IAM role with the same permissions as an existing IAM role, and assign it to the running instance.
+    
+    c. Create an image of the instance, add a new IAM role with the same permissions as the desired IAM role, and deregister the image with the new role assigned.
+    
+    d. Create an image of the instance, and use this image to launch a new instance with the desired IAM role assigned  
+    
+    Đáp án: D. IAM role ko thể assign sau khi EC2 đã được launch
+    
+41. What does the following command do with respect to the Amazon EC2 security groups? ec2-revoke RevokeSecurityGroupIngress
+    
+    a. Removes one or more security groups from a rule.
+    
+    b. Removes one or more security groups from an Amazon EC2 instance.
+    
+    c. Removes one or more rules from a security group
+    
+    d. Removes a security group from our account.    
+    
+    Đáp án: C
+    
+42. Which of the following cannot be used in Amazon EC2 to control who has access to specific Amazon EC2 instances?
+    
+    a. Security Groups
+    
+    b. IAM System
+    
+    c. SSH keys
+    
+    d. Windows passwords  
+      
+    B. IAM chỉ kiểm soát actions nào user có thể perform chứ ko kiểm soát quyền access.
+      
+43. You must assign each server to at least _____ security group
+    
+    a. 3
+    
+    b. 2
+    
+    c. 4
+    
+    d. 1
+          
+    D.
+    
+44. A company is building software on AWS that requires access to various AWS services. Which configuration should be used to ensure that AWS credentials (i.e., Access Key ID/Secret Access Key combination) are not compromised?
+    
+    a. Enable Multi-Factor Authentication for your AWS root account.
+    
+    b. Assign an IAM role to the Amazon EC2 instance
+    
+    c. Store the AWS Access Key ID/Secret Access Key combination in software comments.
+    
+    d. Assign an IAM user to the Amazon EC2 Instance. 
+          
+    B.
+              
+45. Which of the following items are required to allow an application deployed on an EC2 instance to write data to a DynamoDB table? Assume that no security keys are allowed to be stored on the EC2 instance. (Choose 2 answers)
+    
+    a. Create an IAM Role that allows write access to the DynamoDB table
+    
+    b. Add an IAM Role to a running EC2 instance.
+    
+    c. Create an IAM User that allows write access to the DynamoDB table.
+    
+    d. Add an IAM User to a running EC2 instance.
+    
+    e.Launch an EC2 Instance with the IAM Role included in the launch configuration               
+  
+    A, E. B sai vì ko thể assign IAM role vào 1 EC2 đang running
+    
+46. You have an application running on an EC2 Instance, which will allow users to download files from a private S3 bucket using a pre-assigned URL. Before generating the URL the application should verify the existence of the file in S3. How should the application use AWS credentials to access the S3 bucket securely?
+    
+    a. Use the AWS account access Keys the application retrieves the credentials from the source code of the application.
+    
+    b. Create a IAM user for the application with permissions that allow list access to the S3 bucket launch the instance as the IAM user and retrieve the IAM user’s credentials from the EC2 instance user data.
+    
+    c. Create an IAM role for EC2 that allows list access to objects in the S3 bucket. Launch the instance with the role, and retrieve the role’s credentials from the EC2 Instance metadata
+    
+    d. Create an IAM user for the application with permissions that allow list access to the S3 bucket. The application retrieves the IAM user credentials from a temporary directory with permissions that allow read access only to the application user.    
+    
+    Đáp án: C. Mọi thứ liên quan đến giao tiếp securely giưa các service => IAM role
+    
+47. You try to connect via SSH to a newly created Amazon EC2 instance and get one of the following error messages: “Network error: Connection timed out” or “Error connecting to instance], reason: -> Connection timed out: connect,” You have confirmed that the network and security group rules are configured correctly and the instance is passing status checks. What steps should you take to identify the source of the behavior? Choose 2 answers
+    
+    a. Verify that the private key file corresponds to the Amazon EC2 key pair assigned at launch.
+    
+    b. Verify that your IAM user policy has permission to launch Amazon EC2 instances.
+    
+    c. Verify that you are connecting with the appropriate user name for your AMI.
+    
+    d. Verify that the Amazon EC2 Instance was launched with the proper IAM role.
+    
+    e. Verify that your federation trust to AWS has been established.    
+    
+    Đáp án: A, C. 
+    
+48. Please select the most correct answer regarding the persistence of the Amazon Instance Store
+    
+    a. The data on an instance store volume persists only during the life of the associated Amazon EC2 instance
+    
+    b. The data on an instance store volume is lost when the security group rule of the associated instance is changed.
+    
+    c. The data on an instance store volume persists even after associated Amazon EC2 instance is deleted    
+    
+    Đáp án: A
+    
+49. A user has launched an EC2 instance from an instance store backed AMI. The user has attached an additional instance store volume to the instance. The user wants to create an AMI from the running instance. Will the AMI have the additional instance store volume data?
+    
+    a. Yes, the block device mapping will have information about the additional instance store volume
+    
+    b. No, since the instance store backed AMI can have only the root volume bundled
+    
+    c. It is not possible to attach an additional instance store volume to the existing instance store backed AMI instance
+    
+    d. No, since this is ephemeral storage it will not be a part of the AMI    
+    
+    A. 
+    
+50. When an EC2 instance that is backed by an S3-based AMI Is terminated, what happens to the data on the root volume?
+    
+    a. Data is automatically saved as an EBS volume.
+    
+    b. Data is automatically saved as an EBS snapshot.
+    
+    c. Data is automatically deleted
+    
+    d. Data is unavailable until the instance is restarted.    
+    
+    Đáp án C: S3-based AMI = Instance store-backed AMI
+    
+51. Which of the following will occur when an EC2 instance in a VPC (Virtual Private Cloud) with an associated Elastic IP is stopped and started? (Choose 2 answers)
+    
+    a. The Elastic IP will be dissociated from the instance
+    
+    b. All data on instance-store devices will be lost
+    
+    c. All data on EBS (Elastic Block Store) devices will be lost
+    
+    d. The ENI (Elastic Network Interface) is detached
+    
+    e. The underlying host for the instance is changed    
+    
+    Đáp án: E, C
+    
+52. A user has launched an EC2 Windows instance from an instance store backed AMI. The user has also set the Instance initiated shutdown behavior to stop. What will happen when the user shuts down the OS?
+    
+    a. It will not allow the user to shutdown the OS when the shutdown behavior is set to Stop
+    
+    b. It is not possible to set the termination behavior to Stop for an Instance store backed AMI instance
+    
+    c. The instance will stay running but the OS will be shutdown    
+    
+    Đáp án B. Instance store-backed EC2 chỉ running or terminated.
+    
+53. A user has launched an EC2 instance from an instance store backed AMI. If the user restarts the instance, what will happen to the ephemeral storage data?
+    
+    a. All the data will be erased but the ephemeral storage will stay connected
+    
+    b. All data will be erased and the ephemeral storage is released
+    
+    c. It is not possible to restart an instance launched from an instance store backed AMI
+    
+    d. The data is preserved    
+    
+    Đáp án D. Stop => start thì data lost, restart (reboot) thì data vẫn retain.
+    
+54. A user has launched an EBS backed instance. The user started the instance at 9 AM in the morning. Between 9
+    AM to 10 AM, the user is testing some script. Thus, he stopped the instance twice and restarted it. In the same
+    hour the user rebooted the instance once. For how many instance hours will AWS charge the user?
+    
+    A.
+    3 hours
+    
+    B.
+    4 hours
+    
+    C.
+    2 hours
+    
+    D.
+    1 hour
+        
+    Đáp án: A.
+    A user can stop/start or reboot an EC2 instance using the AWS console, the Amazon EC2 CLI or the Amazon
+    EC2 API. Rebooting an instance is equivalent to rebooting an operating system. When the instance is rebooted
+    AWS will not charge the user for the extra hours. In case the user stops the instance, AWS does not charge the
+    running cost but charges only the EBS storage cost. If the user starts and stops the instance multiple times in a
+    single hour, AWS will charge the user for every start and stop. In this case, since the instance was rebooted
+    twice, it will cost the user for 3 instance hours.
+        
+55. A user has launched an EBS backed EC2 instance. What will be the difference while performing the restart or stop/start options on that instance?
+    
+    a. For restart it does not charge for an extra hour, while every stop/start it will be charged as a separate hour
+    
+    b. Every restart is charged by AWS as a separate hour, while multiple start/stop actions during a single hour will be counted as a single hour
+    
+    c. For every restart or start/stop it will be charged as a separate hour
+    
+    d. For restart it charges extra only once, while for every stop/start it will be charged as a separate hour        
+    
+    Đáp án A.
+    
+56. A user has launched an EBS backed EC2 instance. The user has rebooted the instance. Which of the below mentioned statements is not true with respect to the reboot action?
+    
+    a. The private and public address remains the same
+    
+    b. The Elastic IP remains associated with the instance
+    
+    c. The volume is preserved
+    
+    d. The instance runs on a new host computer    
+    
+    Đáp án D. Reboot k làm thay đổi hardware
+    
+57. 
+        
+        
